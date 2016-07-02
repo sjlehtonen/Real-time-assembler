@@ -4,4 +4,4 @@ This project makes it possible to write assembly code in real time by using C++.
 
 Due to huge time constraints I haven't had nowhere near enough time to work on this project so many of the opcodes are not implemented. Many of the important ones like mov, call etc. are however implemented and can be used as reference on how to implement additional opcodes.
 
-The Real time assembler.cpp contains a small usage example. It can be found [here](../tree/master/Real time assembler.cpp).
+The Real time assembler.cpp contains a small usage example. It can be found [here](../blob/tree/master/Real time assembler.cpp).
