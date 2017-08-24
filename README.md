@@ -5,7 +5,7 @@ This project makes it possible to write assembly code in real time by using C++.
 Due to time constraints many of the opcodes are not implemented. Many of the important ones like mov, call etc. are however implemented and can be used as reference on how to implement additional opcodes.
 
 ## Example of usage
-```
+```c++
 int main(int argc, char* argv[])
 {
 	// Usage example
