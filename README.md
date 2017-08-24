@@ -1,7 +1,55 @@
 # Real-time-assembler
 
-This project makes it possible to write assembly code in real time by using C++. The created code can be run and also deleted in real time, thus for example making it harder to analyze the code if it only exists temporarily. The project itself doesn't have any higher purpose as I merely used it to learn how to generate code on runtime and do different things with it.
+This project makes it possible to write assembly code in real time by using C++. The created code can be run and also deleted in real time, thus for example making it harder to analyze the code if it only exists temporarily. I made this project to learn how to generate code on runtime and do different things with it.
 
-Due to time constraints many of the opcodes are not implemented. Many of the important ones like mov, call etc. are however implemented and can be used as reference on how to implement additional opcodes. All in all, I still saw it beneficial to add the project here in case someone wants to view my work.
+Due to time constraints many of the opcodes are not implemented. Many of the important ones like mov, call etc. are however implemented and can be used as reference on how to implement additional opcodes.
 
-The Real time assembler.cpp contains a small usage example. It can be found [here](../master/Real time assembler/Real time assembler.cpp).
+## Example of usage
+```
+int main(int argc, char* argv[])
+{
+	// Usage example
+
+	// Create a context for the function. Context can have more than one function.
+	ASMContext context(NULL);
+	// Create a new function in the context.
+	ASMFunction * f = context.createFunction();
+	// A reference to an opcode can be saved this way so it can be later on used in a jump for example.
+	ASMOpcode * p1 = f->push(EAX);
+	f->push(EBP);
+	f->push(ECX);
+	DWORD b = 0;
+	DWORD * a = &b;
+	f->mov(&b, 5);
+	f->mov(EAX, (DWORD)10);
+
+	// The system can also be used to run already existing functions.
+	// Here the windows-function GetKeyState() is ran.
+	// Note that you need to repeatendly press the up-key for this function to register it.
+	SHORT(__stdcall*fp)(int) = GetKeyState;
+	DWORD address = (DWORD)fp;
+	f->mov(EAX, (DWORD)VK_UP);
+	f->push(EAX);
+	f->call(address);
+	// According to the calling convention of this function, the result is stored in EAX and here it is moved to the variable b.
+	f->movMR(&b, EAX);
+
+	f->pop(EAX);
+	f->pop(EBP);
+	f->pop(ECX);
+	f->ret();
+	// Run the function that was made with the chosen arguments. Note: The arguments aren't really used here.
+	f->run<void>(1, 2, 3);
+	// Finally destroy the function that was used.
+	context.destroyFunction(f);
+	if (b > 0) {
+		std::cout << "The up-key was pressed\n";
+	}
+	else {
+		std::cout << "The up-key wasn't pressed\n";
+	}
+
+	return 0;
+}
+```
+  
