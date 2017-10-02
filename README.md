@@ -88,7 +88,7 @@ The opcode here is the implementation for the mov instruction to move value from
 
 It roughly follows a three step process:
 
-1. Creating the full instruction by merging all the individual bytes required into a full instruction by using simple bi manipulation by shifting the bits to right by a certain amount and then using OR operator to combine them together.
+1. Creating the full instruction by merging all the individual bytes required into a full instruction by using simple bit manipulation by shifting the bits to right by a certain amount and then using OR operator to combine them together.
 
 2. Writing the opcode into memory by using the writeToMemoryAndProtect method. Here you have to be careful to use the right size of the instruction.
 
